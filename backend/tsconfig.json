@@ -1,0 +1,10 @@
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    /* Modules */
+    "module": "NodeNext" /* Specify what module code is generated. */,
+    "rootDir": "src" /* Specify the root folder within your source files. */,
+    "moduleResolution": "nodenext",
+    "outDir": "dist"
+  }
+}
