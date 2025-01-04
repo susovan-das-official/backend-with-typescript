@@ -1,29 +1,27 @@
 import { Request, Response, NextFunction } from "express";
+import { UserRequestBody } from "../types/types.js";
+import { ErrorHandler } from "../utils/ErrorHandler.js";
+import User from "../models/user.model.js";
+import { asyncHandler } from "../utils/asyncHandler.js";
 
-export const testing = async (
-  req: Request<{}, {}, {}>,
-  res: Response,
-  next: NextFunction
-) => {
-  try {
-    // const { username, email, password, avatar, _id } = req.body;
+export const testing = asyncHandler(
+  async (
+    req: Request<{}, {}, UserRequestBody>,
+    res: Response,
+    next: NextFunction
+  ) => {
+    const { username, email, password, avatar, _id } = req.body;
 
-    // const user = await User.create({
-    //   username,
-    //   email,
-    //   password,
-    //   avatar,
-    //   _id,
-    // });
-
-    // res
-    //   .status(201)
-    //   .json({ success: true, message: `Welcome ${user?.username}` });
-    res.status(200).json({ message: "Testing Controller" });
-  } catch (error) {
-    res.status(500).json({
-      success: false,
-      message: error.message || "Internal Server Error",
+    const user = await User.create({
+      username,
+      email,
+      password,
+      avatar,
+      _id,
     });
+
+    return res
+      .status(201)
+      .json({ success: true, message: `Welcome ${user?.username}` });
   }
-};
+);
