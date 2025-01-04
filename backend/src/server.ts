@@ -1,15 +1,17 @@
-import express from "express";
+import app from "./app.js";
+import dotenv from "dotenv";
+import { connectionDB } from "./config/db.js";
 
-const app = express();
+dotenv.config({ path: "./.env" });
 
-const PORT = 5000;
-app.get("/", (req, res) => {
-  res.send("Hello World!");
-});
+const PORT = process.env.PORT;
 
-app.get("/test", (req, res) => {
-  res.send("Hello World!");
-});
-app.listen(PORT, () => {
-  console.log(`Server started on port ${PORT}`);
-});
+connectionDB()
+  .then(() => {
+    app.listen(PORT, () => {
+      console.log(`Server started on port ${PORT}`);
+    });
+  })
+  .catch((error) => {
+    console.log(`Server Error: ${error.message}`);
+  });
